@@ -4,11 +4,17 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    public CharacterController controller;
+
     public Transform Ground, Camera, Hand;
 
     public Camera cam;
 
     public float sensitivity = 10f;
+
+    public float walking = 12f;
+    public float running = 0f;
+    public float speed;
 
     bool IsHandFull;
 
@@ -21,6 +27,10 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        ControlWalking();
+
+        ControlRuning();
+
         ControlCamera();
 
         ControlPickupObject();
@@ -55,5 +65,30 @@ public class PlayerController : MonoBehaviour
                 
             }
         }
+    }
+
+    public void ControlWalking()
+    {
+        speed = walking + running;
+
+        float x = Input.GetAxis("Horizontal");
+        float z = Input.GetAxis("Vertical");
+
+        Vector3 move = Ground.transform.right * x + Ground.transform.forward * z;
+
+        controller.Move(move * speed * Time.deltaTime);
+    }
+
+    public void ControlRuning()
+    {
+        if (Input.GetKey(KeyCode.Space))
+        {
+            running = 8f;
+        }
+        else
+        {
+            running = 0f;
+        }
+
     }
 }
