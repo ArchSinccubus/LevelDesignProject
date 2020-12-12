@@ -91,4 +91,28 @@ public class PlayerController : MonoBehaviour
         }
 
     }
+
+    public void Crawling()
+    {
+        if (isOnGround)
+        {
+            if (Input.GetKey(KeyCode.C))
+            {
+                whatever.height = 0.5f;
+            }
+            else
+            {
+                whatever.height = 1f;
+            }
+        }
+    }
+
+    public void Jump()
+    {
+        if (Input.GetButtonDown("Jump") && isOnGround)
+        {
+            //rb.AddForce(new Vector3(0, 6f, 0), ForceMode.Impulse);
+            isOnGround = false;
+        }
+    }
 }
